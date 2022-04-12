@@ -1,6 +1,6 @@
 <?php
 
-class Transaction
+class DbTransaction
 {
 
   private function __construct(){}
@@ -10,7 +10,7 @@ private static $conn;
 
     /**
      * @throws Exception */
-    public static function open($database)
+    public static function open(string $database)
   {
       self::$conn = Connection::open($database);
       self::$conn->beginTransaction();

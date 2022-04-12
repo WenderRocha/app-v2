@@ -55,8 +55,7 @@ class Connection
     {
         $port = $db['port'] = $db['dbPort'] ?? 3606;
 
-        return new PDO("mysql:host={$db['dbHost']};dbname=
-        {$db['dbName']}",
+        return new PDO("mysql:host={$db['dbHost']};dbname={$db['dbName']}",
         "{$db['dbUser']}",
         "{$db['dbPass']}");
     }

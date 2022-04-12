@@ -29,11 +29,14 @@ require_once "app/Model/enum/TradeOrderType.php";
 require_once "app/Model/enum/TradeResult.php";
 
 require_once "app/Database/Connection.php";
+require_once "app/Database/DbTransaction.php";
 
 try{
-    $conn = Connection::open("database");
+    //$conn = Connection::open("database");
 
-    User::setConnection($conn);
+    //User::setConnection($conn);
+
+    DbTransaction::open("database");
 
     $user = new User(1, 'Wender Rocha', 'wender_dev@hotmail.com',
     '15997644331',
@@ -43,7 +46,7 @@ try{
 
     $user->addWallet($w1);
 
-    //$user->save();
+    $user->save();
 
     $t1 = new Transaction(1, 100,TransactionType::DEPOSIT);
     $t1->setStatus(TransactionStatus::COMPLETED);
@@ -102,9 +105,12 @@ try{
     $b1->addTrade($tr2);
     $b1->addTrade($tr3);
 
-  //dbug(User::delete(17));
+    //dbug(User::delete(17));
 
+    DbTransaction::close();
 
 }catch (Exception $e){
+
+    DbTransaction::rollback();
     echo $e->getMessage();
 }

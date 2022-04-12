@@ -17,8 +17,6 @@ class User
     private string $updated_at;
     private array $wallets;
 
-    private static $conn;
-
     public function __construct(int $id,
                                 string $name,
                                 string $email,
@@ -35,22 +33,20 @@ class User
         $this->wallets = [];
     }
 
-    public static function setConnection($conn)
-    {
-        self::$conn = $conn;
-    }
 
     public static function find($id)
     {
         $sql = "SELECT * FROM users WHERE id= {$id}";
-        $result = self::$conn->query($sql);
+        $conn = \DbTransaction::get();
+        $result = $conn->query($sql);
         return $result->fetchObject();
     }
 
     public static function findAll()
     {
         $sql = "SELECT * FROM users";
-        $result = self::$conn->query($sql);
+        $conn = \DbTransaction::get();
+        $result = $conn->query($sql);
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
@@ -59,7 +55,8 @@ class User
         $sql = "INSERT INTO users (name, email, phone, password, created_at)
                 VALUES (:name, :email, :phone,:password, :created_at)";
 
-        $stmt = self::$conn->prepare($sql);
+        $conn = \DbTransaction::get();
+        $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $this->getName());
         $stmt->bindParam(':email', $this->getEmail());
         $stmt->bindParam(':phone', $this->getPhone());
@@ -71,7 +68,8 @@ class User
     public static function delete($id)
     {
         $sql = "DELETE FROM users WHERE id={$id}";
-        return self::$conn->query($sql);
+        $conn = \DbTransaction::get();
+        return $conn->query($sql);
     }
 
     public function getId(): int
