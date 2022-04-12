@@ -19,7 +19,10 @@ class User
 
     private static $conn;
 
-    public function __construct(int $id, string $name, string $email, string $phone,
+    public function __construct(int $id,
+                                string $name,
+                                string $email,
+                                string $phone,
                                 string $password)
     {
         $this->id = $id;
@@ -53,7 +56,7 @@ class User
 
     public  function save()
     {
-        $sql = "INSERT INTO users (name, email, phone, password, created_at) 
+        $sql = "INSERT INTO users (name, email, phone, password, created_at)
                 VALUES (:name, :email, :phone,:password, :created_at)";
 
         $stmt = self::$conn->prepare($sql);

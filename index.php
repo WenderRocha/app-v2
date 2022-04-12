@@ -35,24 +35,15 @@ try{
 
     User::setConnection($conn);
 
-    $user = new User(1,
-        'Wender Rocha',
-        'wender_dev@hotmail.com',
-        '15997644331',
-        '12345678');
+    $user = new User(1, 'Wender Rocha', 'wender_dev@hotmail.com',
+    '15997644331',
+    '12345678');
 
-
-    $w1 = new Wallet(1,
-        'Quotex',
-        'logo',
-        100, 100,
-        5,
-        5,
-        'BRL');
+    $w1 = new Wallet(1,'Quotex','logo', 100, 100, 5, 5, 'BRL');
 
     $user->addWallet($w1);
 
-    $user->save();
+    //$user->save();
 
     $t1 = new Transaction(1, 100,TransactionType::DEPOSIT);
     $t1->setStatus(TransactionStatus::COMPLETED);
@@ -111,10 +102,7 @@ try{
     $b1->addTrade($tr2);
     $b1->addTrade($tr3);
 
- // dbug(User::delete(2));
-
-
-
+  //dbug(User::delete(17));
 
 
 }catch (Exception $e){

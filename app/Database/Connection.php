@@ -6,10 +6,12 @@ class Connection
     private function __clone(){}
 
     /**
+     * Abre a conexão com o banco de dados de acordo com as configurações
+     * informadas no arquivo database.ini localizada em app/Config/database.ini
+     *
      * @param string $fileName
      * @return PDO
-     * @throws Exception Abre a conexão com o banco de dados de acordo com as configurações
-     * informadas no arquivo database.ini localizada em app/Config/database.ini
+     * @throws Exception
      */
     public static function open(string $fileName): PDO
     {
@@ -26,7 +28,8 @@ class Connection
 
             $conn = match ($db['dbType']) {
                 'pgsql' => self::pgsql($db),
-                'mysql' => self::mysql($db),'sqlite' => self::sqlite($db),
+                'mysql' => self::mysql($db),
+                'sqlite' => self::sqlite($db),
                 default => throw new InvalidArgumentException("Tipo de banco de dados nao suportado")
             };
 
@@ -41,7 +44,9 @@ class Connection
     {
         $port = $db['port'] = $db['dbPort'] ?? 5432;
 
-        return new PDO("pgsql:dbname={$db['dbName']}; user={$db['dbUser']};password={$db['dbPass']};
+        return new PDO("pgsql:dbname={$db['dbName']};
+        user={$db['dbUser']};
+        password={$db['dbPass']};
         host{$db['dbHost']};
         port={$port}");
     }
@@ -50,8 +55,10 @@ class Connection
     {
         $port = $db['port'] = $db['dbPort'] ?? 3606;
 
-        return new PDO("mysql:host={$db['dbHost']}; dbname={$db['dbName']}",
-                        "{$db['dbUser']}", "{$db['dbPass']}");
+        return new PDO("mysql:host={$db['dbHost']};dbname=
+        {$db['dbName']}",
+        "{$db['dbUser']}",
+        "{$db['dbPass']}");
     }
     private static function sqlite(array $db): PDO
     {

@@ -65,5 +65,4 @@ class Goal
         return $this;
     }
 
-
 }

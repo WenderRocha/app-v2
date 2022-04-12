@@ -13,11 +13,6 @@ class Transaction
     private TransactionType $type;
     private TransactionStatus $Status;
 
-    /**
-     * @param int $id
-     * @param int $balance
-     * @param TransactionType $type
-     */
     public function __construct(int $id, int $balance, TransactionType $type)
     {
         $this->id = $id;

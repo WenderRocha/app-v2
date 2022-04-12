@@ -89,11 +89,19 @@ class Book
         return $this->trades;
     }
 
+    /**
+     * Retona a quantidade de trades realizados no dia.
+     * @return int
+     */
     public function getQtdTrades(): int
     {
         return count($this->getTrades());
     }
 
+    /**
+     * Retorna o investimento total aplicado nos trades do dia.
+     * @return int
+     */
     public function getInvestimentTotal(): int
     {
         $sum = 0;
@@ -104,6 +112,11 @@ class Book
         return $sum;
     }
 
+    /**
+     * Retorna a quantidades de trades por WIN, LOSS OU DRAW
+     * @param TradeResult $tradeResult
+     * @return int
+     */
     public function getQtdTradePer(TradeResult $tradeResult)
     {
         $sum = 0;
@@ -117,6 +130,10 @@ class Book
         return $sum;
     }
 
+    /**
+     * Retorna o lucro liquido do dia.
+     * @return int
+     */
     public function getProfitDay(): int
     {
         $sum = 0;
@@ -131,6 +148,10 @@ class Book
         return $sum;
     }
 
+    /**
+     * Retorna o valor perdido nas operações do dia.
+     * @return int
+     */
     public function getBalanceLoss(): int
     {
         $sum = 0;
@@ -145,11 +166,18 @@ class Book
         return $sum;
     }
 
+    /**
+     * Pega o saldo da banca e soma com o lucro do dia.
+     * @return int
+     */
     public function getTotalBalance()
     {
         return $this->getBalance() + $this->getProfitDay();
     }
 
+    /**
+     * Retorna o crecismento da banca em porcentagem @return float|int
+     */
     public function getGrowthRate()
     {
         $profit = $this->getTotalBalance() - $this->getBalance();
